@@ -1,0 +1,371 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.modal-container {
+  background: white;
+  border-radius: 20px;
+  max-width: 1100px;
+  width: 100%;
+  max-height: 90vh;
+  position: relative;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.btn-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  color: var(--dark-gray);
+  cursor: pointer;
+  transition: all 0.3s;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background: var(--danger-red);
+    color: white;
+    transform: rotate(90deg);
+  }
+}
+
+.modal-content {
+  display: grid;
+  grid-template-columns: 45% 55%;
+  height: 100%;
+  max-height: 90vh;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// LEFT SIDE: Image Section
+.image-section {
+  background: white;
+  padding: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px 0 0 20px;
+  position: relative;
+  border-right: 1px solid #e2e8f0;
+
+  @media (max-width: 768px) {
+    border-radius: 20px 20px 0 0;
+    padding: 2rem;
+    min-height: 400px;
+  }
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.3s;
+
+    &:hover {
+      transform: scale(1.05) rotate(-2deg);
+    }
+  }
+}
+
+.carbon-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  color: #fbbf24;
+  padding: 0.75rem 1.25rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  animation: pulse 2s infinite;
+
+  i {
+    font-size: 1.2rem;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+// RIGHT SIDE: Details Section
+.details-section {
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    max-height: none;
+  }
+}
+
+.details-header {
+  padding: 2.5rem 2.5rem 1.5rem;
+  border-bottom: 2px solid #e2e8f0;
+
+  .brand-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--primary-blue);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+
+  .shoe-name {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--dark-navy);
+    margin: 0 0 1rem 0;
+    line-height: 1.2;
+  }
+
+  .price {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--text-black);
+  }
+}
+
+.details-body {
+  flex: 1;
+  padding: 2rem 2.5rem;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+
+    &:hover {
+      background: #94a3b8;
+    }
+  }
+}
+
+.detail-group {
+  margin-bottom: 2rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.group-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--dark-navy);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+
+  i {
+    color: var(--primary-blue);
+  }
+}
+
+.description,
+.info-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--dark-gray);
+  margin: 0;
+}
+
+.specs-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: var(--light-gray);
+  border-radius: 10px;
+  transition: all 0.3s;
+
+  &:hover {
+    background: #e2e8f0;
+    transform: translateX(5px);
+  }
+}
+
+.spec-label {
+  font-weight: 600;
+  color: var(--medium-gray);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.spec-value {
+  font-weight: 700;
+  color: var(--dark-navy);
+  font-size: 1rem;
+}
+
+.stock-status {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 25px;
+  font-weight: 700;
+  font-size: 0.95rem;
+
+  &.in-stock {
+    background: #d1fae5;
+    color: #065f46;
+
+    i {
+      color: #059669;
+    }
+  }
+
+  &.out-of-stock {
+    background: #fee2e2;
+    color: #991b1b;
+
+    i {
+      color: #dc2626;
+    }
+  }
+}
+
+.stock-quantity {
+  font-size: 0.9rem;
+  color: var(--medium-gray);
+  font-weight: 600;
+}
+
+.details-footer {
+  padding: 1.5rem 2.5rem;
+  border-top: 2px solid #e2e8f0;
+  background: var(--light-gray);
+  border-radius: 0 0 20px 0;
+
+  @media (max-width: 768px) {
+    border-radius: 0 0 20px 20px;
+  }
+}
+
+.btn-add-cart {
+  width: 100%;
+  padding: 1rem 2rem;
+  background: var(--accent-orange);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+
+  &:hover:not(:disabled) {
+    background: #d97706;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+  }
+
+  &:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: 0;
+  }
+
+  .modal-container {
+    border-radius: 20px;
+    max-height: 100vh;
+  }
+
+  .details-header {
+    padding: 2rem;
+
+    .shoe-name {
+      font-size: 1.5rem;
+    }
+
+    .price {
+      font-size: 1.75rem;
+    }
+  }
+
+  .details-body {
+    padding: 1.5rem 2rem;
+  }
+
+  .details-footer {
+    padding: 1.5rem 2rem;
+  }
+}
+

@@ -1,0 +1,29 @@
+<!-- Main Header -->
+<header class="main-header">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-2 col-6">
+        <a routerLink="/" class="logo">RunR</a>
+      </div>
+      <div class="col-lg-6 d-none d-lg-block">
+        <nav class="d-flex nav-links">
+          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+          <a routerLink="/shoes" routerLinkActive="active">All Shoes</a>
+          <a *ngIf="isAdminPage" routerLink="/admin" routerLinkActive="active" class="text-warning">Admin</a>
+        </nav>
+      </div>
+      <div class="col-lg-4 col-6">
+        <div class="d-flex justify-content-end align-items-center">
+          <!-- Cart moved to floating button -->
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Floating Cart Button -->
+<button class="floating-cart-btn" (click)="onCartClick($event)" *ngIf="!isAdminPage">
+  <i class="bi bi-cart3"></i>
+  <span class="cart-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
+</button>
+

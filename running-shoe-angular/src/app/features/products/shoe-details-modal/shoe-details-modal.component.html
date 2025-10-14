@@ -1,0 +1,115 @@
+<div class="modal-overlay" (click)="onClose()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <button class="btn-close" (click)="onClose()">
+      <i class="bi bi-x-lg"></i>
+    </button>
+
+    <div class="modal-content">
+      <!-- Left Side: Large Image -->
+      <div class="image-section">
+        <div class="image-wrapper">
+          <img [src]="getShoeImagePath(shoe.name)" 
+               [alt]="shoe.brand + ' ' + shoe.name"
+               (error)="$any($event).target.src='https://via.placeholder.com/600x500/e2e8f0/64748b?text=' + shoe.brand">
+          <div class="carbon-badge" *ngIf="shoe.carbonPlated">
+            <i class="bi bi-lightning-charge-fill"></i>
+            <span>Plated</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side: Details -->
+      <div class="details-section">
+        <div class="details-header">
+          <div class="brand-name">{{ shoe.brand }}</div>
+          <h2 class="shoe-name">{{ shoe.name }}</h2>
+          <div class="price">₱{{ shoe.price | number }}</div>
+        </div>
+
+        <div class="details-body">
+          <!-- Description -->
+          <div class="detail-group" *ngIf="shoe.description">
+            <h3 class="group-title">
+              <i class="bi bi-file-text me-2"></i>Description
+            </h3>
+            <p class="description">{{ shoe.description }}</p>
+          </div>
+
+          <!-- Specifications -->
+          <div class="detail-group">
+            <h3 class="group-title">
+              <i class="bi bi-gear me-2"></i>Specifications
+            </h3>
+            <div class="specs-grid">
+              <div class="spec-row">
+                <span class="spec-label">Gender</span>
+                <span class="spec-value">{{ shoe.gender || 'UNISEX' }}</span>
+              </div>
+              <div class="spec-row" *ngIf="shoe.dropHeight">
+                <span class="spec-label">Drop Height</span>
+                <span class="spec-value">{{ shoe.dropHeight }}</span>
+              </div>
+              <div class="spec-row" *ngIf="shoe.weight">
+                <span class="spec-label">Weight</span>
+                <span class="spec-value">{{ shoe.weight }}</span>
+              </div>
+              <div class="spec-row" *ngIf="shoe.stabilityType">
+                <span class="spec-label">Stability</span>
+                <span class="spec-value">{{ shoe.stabilityType }}</span>
+              </div>
+              <div class="spec-row" *ngIf="shoe.terrainType">
+                <span class="spec-label">Terrain</span>
+                <span class="spec-value">{{ shoe.terrainType }}</span>
+              </div>
+              <div class="spec-row" *ngIf="shoe.experienceType">
+                <span class="spec-label">Experience</span>
+                <span class="spec-value">{{ shoe.experienceType }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ideal For -->
+          <div class="detail-group" *ngIf="shoe.idealFor">
+            <h3 class="group-title">
+              <i class="bi bi-person-check me-2"></i>Ideal For
+            </h3>
+            <p class="info-text">{{ shoe.idealFor }}</p>
+          </div>
+
+          <!-- Key Features -->
+          <div class="detail-group" *ngIf="shoe.keyFeatures">
+            <h3 class="group-title">
+              <i class="bi bi-star me-2"></i>Key Features
+            </h3>
+            <p class="info-text">{{ shoe.keyFeatures }}</p>
+          </div>
+
+          <!-- Stock Status -->
+          <div class="detail-group">
+            <h3 class="group-title">
+              <i class="bi bi-box-seam me-2"></i>Availability
+            </h3>
+            <div class="stock-status">
+              <span class="status-badge" [class.in-stock]="shoe.inStock" [class.out-of-stock]="!shoe.inStock">
+                <i class="bi" [ngClass]="shoe.inStock ? 'bi-check-circle-fill' : 'bi-x-circle-fill'"></i>
+                {{ shoe.inStock ? 'In Stock' : 'Out of Stock' }}
+              </span>
+              <span class="stock-quantity" *ngIf="shoe.stockQuantity">
+                {{ shoe.stockQuantity }} units available
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="details-footer">
+          <button class="btn-add-cart" (click)="onAddToCart()" [disabled]="!shoe.inStock">
+            <i class="bi bi-cart-plus me-2"></i>
+            {{ shoe.inStock ? 'Add to Cart' : 'Out of Stock' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

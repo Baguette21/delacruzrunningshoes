@@ -1,0 +1,62 @@
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <div class="hero-content">
+          <h1 class="hero-title">Find Your Perfect<br>Running Companion</h1>
+          <p class="hero-subtitle">Discover premium running shoes designed for every terrain, experience level, and running style.</p>
+          <a routerLink="/shoes" class="btn-primary-hero">
+            <i class="bi bi-shop me-2"></i>Shop All Shoes
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="hero-image">
+          <img src="https://via.placeholder.com/600x500/22c55e/ffffff?text=Featured+Shoe" alt="Featured Running Shoe" class="featured-shoe">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Shoe Matcher -->
+<section class="shoe-matcher-section">
+  <div class="container">
+    <app-shoe-matcher></app-shoe-matcher>
+  </div>
+</section>
+
+<!-- Featured Products -->
+<section class="products-section">
+  <div class="container">
+    <h2 class="section-title mb-4">Featured Shoes</h2>
+
+    <app-loading-spinner *ngIf="loading" message="Loading amazing running shoes..."></app-loading-spinner>
+
+    <div *ngIf="!loading" class="product-grid">
+      <div *ngFor="let shoe of featuredShoes" class="product-card">
+        <div class="product-image">
+          <img [src]="getShoeImagePath(shoe.name)" 
+               [alt]="shoe.brand + ' ' + shoe.name"
+               (error)="$any($event).target.src='https://via.placeholder.com/400x300/f1f5f9/64748b?text=' + shoe.brand">
+                      <div class="product-badge carbon-plated" *ngIf="shoe.carbonPlated">
+                        <i class="bi bi-lightning-charge-fill me-1"></i>Plated
+                      </div>
+        </div>
+        <div class="product-info">
+          <div class="product-brand">{{ shoe.brand }}</div>
+          <h3 class="product-name">{{ shoe.name }}</h3>
+          <div class="product-price">₱{{ shoe.price | number }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <a routerLink="/shoes" class="btn-view-all">
+        View All Shoes <i class="bi bi-arrow-right ms-2"></i>
+      </a>
+    </div>
+  </div>
+</section>
+

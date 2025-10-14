@@ -1,0 +1,32 @@
+<!-- Alert Area -->
+<div *ngIf="alertMessage" class="alert-custom alert-{{ alertType }}" [innerHTML]="alertMessage"></div>
+
+<div class="admin-card">
+  <h3 class="card-title">
+    <i class="bi bi-database-fill-gear"></i>
+    Database Management Tools
+  </h3>
+  <p class="text-muted mb-4">Use these tools to manage your database. <strong>Warning:</strong> These actions cannot be undone!</p>
+  
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="tool-card tool-card-danger">
+        <h4><i class="bi bi-trash-fill text-danger"></i> Clear All Data</h4>
+        <p class="mb-3">Delete all running shoe records from the database</p>
+        <button class="btn-danger-custom" (click)="clearDatabase()">
+          <i class="bi bi-trash me-2"></i>Clear Database
+        </button>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="tool-card tool-card-success">
+        <h4><i class="bi bi-arrow-repeat text-success"></i> Reload from CSV</h4>
+        <p class="mb-3">Clear database and reload all 100 shoes from CSV file</p>
+        <button class="btn-success-custom" (click)="reloadFromCSV()">
+          <i class="bi bi-download me-2"></i>Reload from CSV
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

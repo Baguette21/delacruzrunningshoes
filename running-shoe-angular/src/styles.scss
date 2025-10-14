@@ -1,0 +1,44 @@
+/* Global Styles */
+
+:root {
+  --primary-blue: #2563eb;
+  --secondary-blue: #1d4ed8;
+  --accent-orange: #f59e0b;
+  --success-green: #10b981;
+  --danger-red: #ef4444;
+  --dark-navy: #0f172a;
+  --light-gray: #f8fafc;
+  --medium-gray: #64748b;
+  --dark-gray: #334155;
+  --text-black: #1e293b;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--light-gray);
+  color: var(--dark-gray);
+}
+
+/* Bootstrap Overrides */
+.container {
+  max-width: 1200px;
+}
+
+/* Utility Classes */
+.text-muted {
+  color: var(--medium-gray) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+}
+

@@ -1,0 +1,94 @@
+<div class="shoe-matcher-container">
+  <div class="matcher-card">
+    <!-- Header -->
+    <div class="matcher-header">
+      <h2 class="matcher-title">
+        <i class="bi bi-compass me-2"></i>Find Your Perfect Shoe
+      </h2>
+      <p class="matcher-subtitle" *ngIf="!showResults">
+        Answer {{ questions.length }} quick questions to discover shoes tailored to your running style
+      </p>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-container" *ngIf="!showResults">
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="getProgressPercentage()"></div>
+      </div>
+      <div class="progress-text">
+        Question {{ currentStep + 1 }} of {{ questions.length }}
+      </div>
+    </div>
+
+    <!-- Questions -->
+    <div class="questions-container" *ngIf="!showResults">
+      <div class="question-wrapper" *ngFor="let question of questions; let i = index" 
+           [class.active]="i === currentStep"
+           [class.completed]="i < currentStep">
+        
+        <div class="question-content" *ngIf="i === currentStep">
+          <h3 class="question-text">
+            <span class="question-number">{{ question.id }}</span>
+            {{ question.question }}
+          </h3>
+
+          <div class="options-grid" [class.two-column]="question.options.length === 2">
+            <button *ngFor="let option of question.options" 
+                    class="option-card"
+                    (click)="selectOption(question.id, option.value)">
+              <i class="option-icon" [ngClass]="option.icon"></i>
+              <span class="option-label">{{ option.label }}</span>
+              <i class="bi bi-check-circle-fill check-icon"></i>
+            </button>
+          </div>
+
+          <!-- Back Button -->
+          <button class="btn-back" (click)="previousStep()" *ngIf="currentStep > 0">
+            <i class="bi bi-arrow-left me-2"></i>Back
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="results-container" *ngIf="showResults">
+      <div class="results-header">
+        <i class="bi bi-stars success-icon"></i>
+        <h3 class="results-title">We Found {{ matchedShoes.length }} Perfect Matches!</h3>
+        <p class="results-subtitle">Based on your preferences, here are our top recommendations:</p>
+      </div>
+
+      <div class="results-grid">
+        <div *ngFor="let shoe of matchedShoes" class="result-card">
+          <div class="result-image">
+            <img [src]="getShoeImagePath(shoe.name)" 
+                 [alt]="shoe.brand + ' ' + shoe.name"
+                 (error)="$any($event).target.src='https://via.placeholder.com/400x300/e2e8f0/64748b?text=' + shoe.brand">
+            <div class="result-badge plated" *ngIf="shoe.carbonPlated">
+              <i class="bi bi-lightning-charge-fill me-1"></i>Plated
+            </div>
+          </div>
+          <div class="result-info">
+            <div class="result-brand">{{ shoe.brand }}</div>
+            <h4 class="result-name">{{ shoe.name }}</h4>
+            <div class="result-price">₱{{ shoe.price | number }}</div>
+            <div class="result-tags">
+              <span class="tag" *ngIf="shoe.experienceType">{{ shoe.experienceType }}</span>
+              <span class="tag" *ngIf="shoe.stabilityType">{{ shoe.stabilityType }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="results-actions">
+        <button class="btn-primary" (click)="viewAllShoes()">
+          <i class="bi bi-grid me-2"></i>View All Shoes
+        </button>
+        <button class="btn-secondary" (click)="restart()">
+          <i class="bi bi-arrow-clockwise me-2"></i>Take Quiz Again
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

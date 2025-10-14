@@ -1,0 +1,98 @@
+<!-- Alert Area -->
+<div *ngIf="alertMessage" class="alert-custom alert-{{ alertType }}">
+  <i class="bi" [ngClass]="{
+    'bi-check-circle-fill': alertType === 'success',
+    'bi-exclamation-triangle-fill': alertType === 'danger',
+    'bi-info-circle-fill': alertType === 'info'
+  }" class="me-2"></i>
+  {{ alertMessage }}
+</div>
+
+<!-- Add Category Form -->
+<div class="admin-card">
+  <h3 class="card-title">
+    <i class="bi bi-plus-circle-fill text-success"></i>
+    Add New Category
+  </h3>
+  <form (ngSubmit)="onSubmit()" #categoryForm="ngForm">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="form-label">Name *</label>
+          <input type="text" class="form-control" [(ngModel)]="newCategory.name" name="name" required>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label class="form-label">Experience Type *</label>
+          <select class="form-select" [(ngModel)]="newCategory.experienceType" name="experienceType" required>
+            <option value="">Select Type</option>
+            <option *ngFor="let type of experienceTypes" [value]="type">{{ type }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group">
+          <label class="form-label">Description *</label>
+          <textarea class="form-control" [(ngModel)]="newCategory.description" name="description" required></textarea>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn-success-custom" [disabled]="!categoryForm.valid">
+      <i class="bi bi-plus-circle me-2"></i>Add Category
+    </button>
+  </form>
+</div>
+
+<!-- Categories List -->
+<div class="admin-card">
+  <h3 class="card-title">
+    <i class="bi bi-list-ul"></i>
+    All Categories
+    <button class="btn-primary-custom ms-auto" (click)="loadCategories()" style="font-size: 0.875rem; padding: 0.5rem 1rem;">
+      <i class="bi bi-arrow-clockwise"></i> Refresh
+    </button>
+  </h3>
+
+  <div *ngIf="loading" class="text-center py-4">
+    <div class="spinner-border text-primary" role="status"></div>
+    <p class="mt-2">Loading categories...</p>
+  </div>
+
+  <div *ngIf="!loading" class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Experience Type</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="categories.length === 0">
+          <td colspan="6" class="text-center text-muted">No categories found</td>
+        </tr>
+        <tr *ngFor="let category of categories">
+          <td>{{ category.id }}</td>
+          <td><strong>{{ category.name }}</strong></td>
+          <td><span class="badge badge-info">{{ category.experienceType }}</span></td>
+          <td>{{ category.description || 'N/A' }}</td>
+          <td>
+            <span class="badge" [class.badge-success]="category.active" [class.badge-warning]="!category.active">
+              {{ category.active ? 'Active' : 'Inactive' }}
+            </span>
+          </td>
+          <td>
+            <button class="btn-danger-custom" (click)="deleteCategory(category)">
+              <i class="bi bi-trash"></i> Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

@@ -1,0 +1,35 @@
+<div class="modal-overlay" *ngIf="show" (click)="onClose()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="modal-content">
+      <div class="modal-icon" [ngClass]="getIconClass()">
+        <i class="bi" [ngClass]="getIcon()"></i>
+      </div>
+      
+      <h2 class="modal-title" *ngIf="config?.title">{{ config?.title }}</h2>
+      
+      <p class="modal-message">{{ config?.message }}</p>
+      
+      <div class="modal-actions">
+        <button 
+          *ngIf="config?.type === 'confirm'" 
+          class="btn-secondary" 
+          (click)="onCancel()">
+          {{ config?.cancelText || 'Cancel' }}
+        </button>
+        <button 
+          *ngIf="config?.type === 'confirm'" 
+          class="btn-primary" 
+          (click)="onConfirm()">
+          {{ config?.confirmText || 'Confirm' }}
+        </button>
+        <button 
+          *ngIf="config?.type !== 'confirm'" 
+          class="btn-primary" 
+          (click)="onClose()">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

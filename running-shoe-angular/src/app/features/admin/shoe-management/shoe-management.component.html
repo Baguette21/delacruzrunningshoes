@@ -1,0 +1,99 @@
+<!-- Alert Area -->
+<div *ngIf="alertMessage" class="alert-custom alert-{{ alertType }}">
+  <i class="bi" [ngClass]="{
+    'bi-check-circle-fill': alertType === 'success',
+    'bi-exclamation-triangle-fill': alertType === 'danger',
+    'bi-info-circle-fill': alertType === 'info'
+  }" class="me-2"></i>
+  {{ alertMessage }}
+</div>
+
+<!-- Shoes Grid -->
+<div class="admin-card">
+  <div class="card-header-with-button">
+    <h3 class="card-title">
+      <i class="bi bi-grid-3x3-gap"></i>
+      All Shoes ({{ shoes.length }})
+    </h3>
+    <div class="header-actions">
+      <button class="btn-add-shoe" (click)="openAddModal()">
+        <i class="bi bi-plus-circle me-2"></i>Add Shoe
+      </button>
+      <button class="btn-refresh" (click)="loadShoes()">
+        <i class="bi bi-arrow-clockwise"></i>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;"></div>
+    <p class="text-muted">Loading shoes...</p>
+  </div>
+
+  <div *ngIf="!loading && shoes.length === 0" class="empty-state">
+    <i class="bi bi-inbox"></i>
+    <h3>No shoes found</h3>
+    <p>Add your first shoe using the form above</p>
+  </div>
+
+  <div *ngIf="!loading && shoes.length > 0" class="product-grid">
+    <div *ngFor="let shoe of shoes" class="product-card">
+      <div class="product-image">
+        <img [src]="getShoeImagePath(shoe.name)" 
+             [alt]="shoe.brand + ' ' + shoe.name"
+             (error)="$any($event).target.src='https://via.placeholder.com/400x300/e2e8f0/64748b?text=' + shoe.brand">
+        <div class="product-badge carbon-plated" *ngIf="shoe.carbonPlated">
+          <i class="bi bi-lightning-charge-fill me-1"></i>Plated
+        </div>
+        <div class="product-badge low-stock" *ngIf="shoe.stockQuantity && shoe.stockQuantity < 10" [class.with-carbon]="shoe.carbonPlated">
+          Low Stock
+        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-category">{{ shoe.idealFor || 'Running Shoe' }}</div>
+        <div class="product-brand">{{ shoe.brand }}</div>
+        <h3 class="product-name">{{ shoe.name }}</h3>
+        
+        <div class="product-specs">
+          <div class="spec-item">
+            <span class="spec-label">Drop</span>
+            <span class="spec-value">{{ shoe.dropHeight || 'N/A' }}</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Weight</span>
+            <span class="spec-value">{{ shoe.weight || 'N/A' }}</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Stock</span>
+            <span class="spec-value">{{ shoe.stockQuantity || 0 }}</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Type</span>
+            <span class="spec-value">{{ shoe.experienceType || 'N/A' }}</span>
+          </div>
+        </div>
+
+        <div class="product-price">₱{{ shoe.price | number }}</div>
+        
+        <div class="product-actions">
+          <button class="btn-edit" (click)="editShoe(shoe)">
+            <i class="bi bi-pencil-square me-2"></i>Edit
+          </button>
+          <button class="btn-delete" (click)="deleteShoe(shoe)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add/Edit Modal -->
+<app-shoe-edit-modal
+  *ngIf="showModal"
+  [mode]="modalMode"
+  [shoe]="selectedShoe"
+  (save)="saveShoe($event)"
+  (close)="closeModal()">
+</app-shoe-edit-modal>
+

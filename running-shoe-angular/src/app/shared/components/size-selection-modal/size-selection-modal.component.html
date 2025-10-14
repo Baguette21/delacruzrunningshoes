@@ -1,0 +1,83 @@
+<div class="modal-overlay" (click)="onClose()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>
+        <i class="bi bi-rulers me-2"></i>
+        Select Your Size
+      </h2>
+      <button class="btn-close" (click)="onClose()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Shoe Preview -->
+      <div class="shoe-preview">
+        <div class="shoe-image">
+          <img [src]="getShoeImagePath(shoe.name)" 
+               [alt]="shoe.brand + ' ' + shoe.name"
+               (error)="$any($event).target.src='https://via.placeholder.com/200x150/f1f5f9/64748b?text=' + shoe.brand">
+        </div>
+        <div class="shoe-info">
+          <div class="shoe-brand">{{ shoe.brand }}</div>
+          <div class="shoe-name">{{ shoe.name }}</div>
+          <div class="shoe-price">₱{{ shoe.price | number }}</div>
+        </div>
+      </div>
+
+      <!-- Gender Selection -->
+      <div class="gender-selection">
+        <label class="gender-label">Size Type:</label>
+        <div class="gender-buttons">
+          <button 
+            class="gender-btn" 
+            [class.active]="selectedGender === 'MEN'"
+            [disabled]="!mensSizesArray.length"
+            (click)="selectedGender = 'MEN'; onGenderChange()">
+            <i class="bi bi-person me-2"></i>Men's US
+          </button>
+          <button 
+            class="gender-btn" 
+            [class.active]="selectedGender === 'WOMEN'"
+            [disabled]="!womensSizesArray.length"
+            (click)="selectedGender = 'WOMEN'; onGenderChange()">
+            <i class="bi bi-person-dress me-2"></i>Women's US
+          </button>
+        </div>
+      </div>
+
+      <!-- Size Selection -->
+      <div class="size-selection">
+        <label class="size-label">Select Size (US {{ selectedGender === 'MEN' ? "Men's" : "Women's" }}):</label>
+        <div class="size-grid">
+          <button 
+            *ngFor="let size of availableSizes"
+            class="size-btn" 
+            [class.active]="selectedSize === size"
+            (click)="selectedSize = size">
+            {{ size }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Stock Info -->
+      <div class="stock-info" [class.low-stock]="selectedSizeStock < 5">
+        <i class="bi bi-box-seam me-2"></i>
+        {{ selectedSizeStock }} pairs available in size {{ selectedSize }}
+        <span *ngIf="selectedSizeStock === 0" class="out-of-stock-badge">OUT OF STOCK</span>
+        <span *ngIf="selectedSizeStock > 0 && selectedSizeStock < 5" class="low-stock-badge">LOW STOCK</span>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn-cancel" (click)="onClose()">
+        <i class="bi bi-x-circle me-2"></i>Cancel
+      </button>
+      <button type="button" class="btn-add-to-cart" (click)="onAddToCart()" [disabled]="!selectedSize || selectedSizeStock === 0">
+        <i class="bi bi-cart-plus me-2"></i>
+        {{ selectedSizeStock === 0 ? 'Out of Stock' : 'Add to Cart' }}
+      </button>
+    </div>
+  </div>
+</div>
+

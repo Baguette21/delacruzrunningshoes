@@ -1,0 +1,94 @@
+<div class="modal-overlay" (click)="onClose()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>
+        <i class="bi bi-box-seam me-2"></i>
+        Manage Stock by Size
+      </h2>
+      <button class="btn-close" (click)="onClose()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Shoe Info -->
+      <div class="shoe-info-banner">
+        <div class="shoe-details">
+          <div class="shoe-brand">{{ shoe.brand }}</div>
+          <div class="shoe-name">{{ shoe.name }}</div>
+        </div>
+        <div class="total-stock">
+          <div class="stock-label">Total Stock</div>
+          <div class="stock-value">{{ totalStock }}</div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <label class="quick-label">Quick Set All Stock:</label>
+        <div class="quick-buttons">
+          <button class="quick-btn" (click)="setAllStock(0)">0</button>
+          <button class="quick-btn" (click)="setAllStock(5)">5</button>
+          <button class="quick-btn" (click)="setAllStock(10)">10</button>
+          <button class="quick-btn" (click)="setAllStock(20)">20</button>
+          <button class="quick-btn" (click)="setAllStock(50)">50</button>
+        </div>
+      </div>
+
+      <!-- Size Stock Grid -->
+      <div class="size-sections">
+        <!-- Men's Sizes -->
+        <div class="size-section" *ngIf="shoe.mensSizes">
+          <h3 class="section-title">
+            <i class="bi bi-person me-2"></i>Men's US Sizes
+          </h3>
+          <div class="size-stock-grid">
+            <div *ngFor="let item of getMensSizes()" class="size-stock-item">
+              <div class="size-stock-row">
+                <div class="size-label">US {{ item.size }}</div>
+                <input 
+                  type="number" 
+                  class="stock-input" 
+                  [(ngModel)]="item.stock"
+                  (ngModelChange)="onStockChange()"
+                  min="0"
+                  max="999">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Women's Sizes -->
+        <div class="size-section" *ngIf="shoe.womensSizes">
+          <h3 class="section-title">
+            <i class="bi bi-person-dress me-2"></i>Women's US Sizes
+          </h3>
+          <div class="size-stock-grid">
+            <div *ngFor="let item of getWomensSizes()" class="size-stock-item">
+              <div class="size-stock-row">
+                <div class="size-label">US {{ item.size }}</div>
+                <input 
+                  type="number" 
+                  class="stock-input" 
+                  [(ngModel)]="item.stock"
+                  (ngModelChange)="onStockChange()"
+                  min="0"
+                  max="999">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn-cancel" (click)="onClose()">
+        <i class="bi bi-x-circle me-2"></i>Cancel
+      </button>
+      <button type="button" class="btn-save" (click)="onSave()">
+        <i class="bi bi-check-circle me-2"></i>Save Stock Levels
+      </button>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,23 @@
+@import '../admin-shared-styles.scss';
+
+.tool-card {
+  padding: 2rem;
+  border-radius: 15px;
+
+  h4 {
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: var(--medium-gray);
+  }
+}
+
+.tool-card-danger {
+  background: #fee2e2;
+}
+
+.tool-card-success {
+  background: #d1fae5;
+}
+

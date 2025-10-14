@@ -1,0 +1,112 @@
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <h1 class="page-title">Premium Running Shoes</h1>
+    <p class="page-subtitle">Discover our complete collection of high-performance running shoes</p>
+  </div>
+</section>
+
+<!-- Main Content -->
+<div class="container">
+  <!-- Filter Section -->
+  <div class="filter-section">
+    <h3 class="filter-title"><i class="bi bi-funnel me-2"></i>Filter & Search</h3>
+    
+    <!-- Search Bar -->
+    <div class="search-container mb-4">
+      <i class="bi bi-search search-icon"></i>
+      <input 
+        type="text" 
+        class="search-input" 
+        placeholder="Search by name, brand, or description..."
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange()">
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-dropdowns">
+      <div class="filter-dropdown">
+        <label>Brand</label>
+        <select [(ngModel)]="selectedBrand" (ngModelChange)="onBrandChange()">
+          <option value="">All Brands</option>
+          <option *ngFor="let brand of brands" [value]="brand">{{ brand }}</option>
+        </select>
+      </div>
+      <div class="filter-dropdown">
+        <label>Sort By</label>
+        <select [(ngModel)]="sortBy" (ngModelChange)="onSortChange()">
+          <option value="name">Name (A-Z)</option>
+          <option value="price-low">Price (Low to High)</option>
+          <option value="price-high">Price (High to Low)</option>
+          <option value="brand">Brand</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Products Grid -->
+  <app-loading-spinner *ngIf="loading" message="Loading premium running shoes..."></app-loading-spinner>
+
+  <div *ngIf="!loading && filteredShoes.length === 0" class="empty-state">
+    <i class="bi bi-search"></i>
+    <h3>No shoes found</h3>
+    <p>Try adjusting your filters or search terms</p>
+  </div>
+
+  <div *ngIf="!loading && filteredShoes.length > 0" class="product-grid">
+    <div *ngFor="let shoe of filteredShoes" class="product-card">
+      <div class="product-image">
+        <img [src]="getShoeImagePath(shoe.name)" 
+             [alt]="shoe.brand + ' ' + shoe.name"
+             (error)="$any($event).target.src='https://via.placeholder.com/400x300/e2e8f0/64748b?text=' + shoe.brand">
+                        <div class="product-badge carbon-plated" *ngIf="shoe.carbonPlated">
+                          <i class="bi bi-lightning-charge-fill me-1"></i>Plated
+                        </div>
+      </div>
+      <div class="product-info">
+        <div class="product-category">{{ shoe.idealFor || 'Running Shoe' }}</div>
+        <div class="product-brand">{{ shoe.brand }}</div>
+        <h3 class="product-name">{{ shoe.name }}</h3>
+        
+        <div class="product-specs">
+          <div class="spec-item">
+            <span class="spec-label">Drop</span>
+            <span class="spec-value">{{ shoe.dropHeight || 'N/A' }}</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Weight</span>
+            <span class="spec-value">{{ shoe.weight || 'N/A' }}</span>
+          </div>
+        </div>
+
+        <div class="product-price">₱{{ shoe.price | number }}</div>
+        
+        <div class="product-actions">
+          <button class="btn-details" (click)="openDetails(shoe)">
+            <i class="bi bi-info-circle me-2"></i>Details
+          </button>
+          <button class="btn-buy" (click)="handleAddToCart(shoe)">
+            <i class="bi bi-cart-plus me-2"></i>Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Details Modal -->
+<app-shoe-details-modal
+  *ngIf="showDetailsModal && selectedShoe"
+  [shoe]="selectedShoe"
+  (close)="closeDetails()"
+  (addToCart)="handleAddToCart($event)">
+</app-shoe-details-modal>
+
+<!-- Size Selection Modal -->
+<app-size-selection-modal
+  *ngIf="showSizeModal && shoeForCart"
+  [shoe]="shoeForCart"
+  (close)="closeSizeModal()"
+  (sizeSelected)="handleSizeSelected($event)">
+</app-size-selection-modal>
+

@@ -1,0 +1,59 @@
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <h1 class="page-title">
+      <i class="bi bi-gear-fill"></i> Admin Dashboard
+    </h1>
+    <p class="page-subtitle">Manage shoes and orders</p>
+  </div>
+</section>
+
+<!-- Main Content -->
+<div class="container">
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-number">{{ totalShoes }}</span>
+      <span class="stat-label">Total Shoes</span>
+    </div>
+    <div class="stat-card stat-card-green">
+      <span class="stat-number">{{ totalOrders }}</span>
+      <span class="stat-label">Total Orders</span>
+    </div>
+    <div class="stat-card stat-card-orange">
+      <span class="stat-number">{{ totalBrands }}</span>
+      <span class="stat-label">Brands</span>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="admin-tabs">
+    <div class="d-flex gap-2 flex-wrap justify-content-center">
+      <button 
+        class="tab-button" 
+        [class.active]="activeTab === 'shoes'"
+        (click)="switchTab('shoes')">
+        <i class="bi bi-shop me-2"></i>Manage Shoes
+      </button>
+      <button 
+        class="tab-button" 
+        [class.active]="activeTab === 'orders'"
+        (click)="switchTab('orders')">
+        <i class="bi bi-receipt me-2"></i>View Orders
+      </button>
+    </div>
+  </div>
+
+  <!-- Tab Contents -->
+  <div class="tab-content">
+    <app-shoe-management 
+      *ngIf="activeTab === 'shoes'"
+      (dataChanged)="onDataChanged()">
+    </app-shoe-management>
+
+    <app-view-orders 
+      *ngIf="activeTab === 'orders'">
+    </app-view-orders>
+  </div>
+</div>
+
