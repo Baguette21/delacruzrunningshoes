@@ -88,6 +88,22 @@ export class CheckoutComponent implements OnInit {
       return;
     }
 
+    // Validate email format if provided
+    if (this.email && this.email.trim() !== '') {
+      const emailPattern = /.*@.*\.com$/;
+      if (!emailPattern.test(this.email)) {
+        this.modalService.warning('Email must contain @ and end with .com', 'Invalid Email Format');
+        return;
+      }
+    }
+
+    // Validate contact number format
+    const phonePattern = /^09[0-9]{9}$/;
+    if (!phonePattern.test(this.contactNumber)) {
+      this.modalService.warning('Contact number must start with 09 and have 11 digits total', 'Invalid Contact Number');
+      return;
+    }
+
     this.isProcessing = true;
 
     // Create order items

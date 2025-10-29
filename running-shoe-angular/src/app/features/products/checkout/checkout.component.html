@@ -79,7 +79,8 @@
                 class="form-control" 
                 [(ngModel)]="email" 
                 name="email" 
-                placeholder="your.email@example.com">
+                placeholder="your.email@example.com"
+                pattern=".*@.*\.com$">
             </div>
 
             <div class="form-group">
@@ -91,7 +92,9 @@
                 class="form-control" 
                 [(ngModel)]="contactNumber" 
                 name="contactNumber" 
-                placeholder="09XX XXX XXXX"
+                placeholder="09XXXXXXXXX"
+                pattern="09[0-9]{9}"
+                maxlength="11"
                 required>
             </div>
 

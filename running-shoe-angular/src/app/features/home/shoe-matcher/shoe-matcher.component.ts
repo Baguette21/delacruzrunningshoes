@@ -42,8 +42,8 @@ export class ShoeMatcherComponent implements OnInit {
       id: 1,
       question: "What's your price range?",
       options: [
-        { label: 'Less than ₱5,000', value: 'under5000', icon: 'bi-cash-stack' },
-        { label: '₱5,000 - ₱10,000', value: '5000to10000', icon: 'bi-wallet2' },
+        { label: 'Less than ₱8,000', value: 'under8000', icon: 'bi-cash-stack' },
+        { label: '₱8,000 - ₱10,000', value: '8000to10000', icon: 'bi-wallet2' },
         { label: "Price doesn't matter", value: 'any', icon: 'bi-infinity' }
       ]
     },
@@ -126,10 +126,10 @@ export class ShoeMatcherComponent implements OnInit {
     let filtered = [...this.allShoes];
 
     // Filter by price
-    if (this.answers.priceRange === 'under5000') {
-      filtered = filtered.filter(shoe => shoe.price < 5000);
-    } else if (this.answers.priceRange === '5000to10000') {
-      filtered = filtered.filter(shoe => shoe.price >= 5000 && shoe.price <= 10000);
+    if (this.answers.priceRange === 'under8000') {
+      filtered = filtered.filter(shoe => shoe.price < 8000);
+    } else if (this.answers.priceRange === '8000to10000') {
+      filtered = filtered.filter(shoe => shoe.price >= 8000 && shoe.price <= 10000);
     }
 
     // Filter by runner type
